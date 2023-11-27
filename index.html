@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire</title>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    body {
+        background: linear-gradient(rgb(62, 129, 29), rgb(49, 53, 70));
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    h2 {
+    color: #333; 
+    margin: 20px 120px;
+    }
+
+    form {
+    max-width: 400px; 
+    margin: 0 auto; 
+    background-color: #fff; 
+    padding: 20px;
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    }
+
+    label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333; 
+    }
+
+    .radio-group {
+            display: flex;
+            align-items: center;
+    }
+
+    .radio-group label {
+            margin-right: 10px; 
+    }
+
+    select, input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    }
+
+    button {
+    background-color: rgb(62, 129, 29); 
+    color: #fff; 
+    padding: 10px 15px;
+    margin: 50px 150px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s; 
+
+    }
+
+    button:hover {
+        background: linear-gradient(rgb(62, 129, 29), rgb(49, 53, 70));
+    }
+
+    #option1Fields, #option2Fields {
+    margin-top: 15px;
+    }
+
+    .recap {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .success {
+    color: #4caf50;
+    font-weight: bold;
+    }
+
+  </style>
+</head>
+<body>
+
+
+  <form id="userForm">
+
+    <h2>Formulaire</h2>
+
+    <label for="lastName">Last Name</label>
+    <input type="text" id="lastName" name="lastName" required>
+
+    <label for="firstName">First Name</label>
+    <input type="text" id="firstName" name="firstName" required>
+
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" name="dob" required>
+
+    <label for="optionSelect">Options</label>
+    <select id="optionSelect" name="optionSelect" onchange="showFields()">
+      <option value="" selected disabled>Select an option</option>
+      <option value="option1">Option 1</option>
+      <option value="option2">Option 2</option>
+    </select>
+
+    <div id="option1Fields" style="display: none;">
+        <label>Gender</label>
+        <div class="radio-group">
+            <label for="input1">Female</label>
+            <input type="radio" id="input1" name="input1" value="female">
+
+            <label for="input1">Male</label>
+            <input type="radio" id="input1" name="input1" value="male">
+        </div>
+      
+
+      <label for="input2">Size:</label>
+      <input type="text" id="input2" name="input2">
+
+      <label for="input3">Weight:</label>
+      <input type="text" id="input3" name="input3">
+    </div>
+
+    <div id="option2Fields" style="display: none;">
+      <div class="radio-group">
+        <label for="input1">Female</label>
+        <input type="radio" id="input1" name="input1" value="female">
+
+        <label for="input1">Male</label>
+        <input type="radio" id="input1" name="input1" value="male">
+      </div>
+
+      <label for="input4">Country:</label>
+      <input type="text" id="input4" name="input4">
+
+      <label for="input5">City:</label>
+      <input type="text" id="input5" name="input5">
+    </div>
+
+    <button type="button" onclick="validateForm()">Valider</button>
+  </form>
+
+  <script>
+
+function validateForm() {
+    var firstName = document.getElementById("firstName").value;
+    var lastName = document.getElementById("lastName").value;
+    var dob = document.getElementById("dob").value;
+    var optionSelect = document.getElementById("optionSelect").value;
+
+    var input1 = document.querySelector('input[name="input1"]:checked');
+    var input2 = document.getElementById("input2").value;
+    var input3 = document.getElementById("input3").value;
+    var input4 = document.getElementById("input4").value;
+    var input5 = document.getElementById("input5").value;
+
+    // Validation des champs avec regex
+    if (!regexName.test(firstName)) {
+        alert("Invalid First Name");
+        return false;
+    }
+
+    if (!regexName.test(lastName)) {
+        alert("Invalid Last Name");
+        return false;
+    }
+
+    if (!regexDOB.test(dob)) {
+        alert("Invalid Date of Birth");
+        return false;
+    }
+
+    // Validation en fonction de l'option sélectionnée
+    if (optionSelect === "option1") {
+        if (!input1 || !regexGender.test(input1.value)) {
+            alert("Invalid Gender");
+            return false;
+        }
+
+        if (!regexSize.test(input2)) {
+            alert("Invalid Size");
+            return false;
+        }
+
+        if (!regexWeight.test(input3)) {
+            alert("Invalid Weight");
+            return false;
+        }
+    } else if (optionSelect === "option2") {
+        if (!regexCountry.test(input4)) {
+            alert("Invalid Country");
+            return false;
+        }
+
+        if (!regexCity.test(input5)) {
+            alert("Invalid City");
+            return false;
+        }
+    }
+
+    // Store form data in local storage
+    localStorage.setItem("firstName", firstName);
+    localStorage.setItem("lastName", lastName);
+    localStorage.setItem("dob", dob);
+    localStorage.setItem("optionSelect", optionSelect);
+    localStorage.setItem("input1", input1 ? input1.value : "");
+    localStorage.setItem("input2", input2);
+    localStorage.setItem("input3", input3);
+    localStorage.setItem("input4", input4);
+    localStorage.setItem("input5", input5);
+
+    // Redirect to the recap page
+    window.location.href = "recap.html";
+}
+
+
+
+    function showFields() {
+      var optionSelect = document.getElementById("optionSelect");
+      var option1Fields = document.getElementById("option1Fields");
+      var option2Fields = document.getElementById("option2Fields");
+
+      option1Fields.style.display = (optionSelect.value === "option1") ? "block" : "none";
+      option2Fields.style.display = (optionSelect.value === "option2") ? "block" : "none";
+    }
+
+    function validateForm() {
+    var firstName = document.getElementById("firstName").value;
+    var lastName = document.getElementById("lastName").value;
+    var dob = document.getElementById("dob").value;
+    var optionSelect = document.getElementById("optionSelect").value;
+
+    var input1 = document.getElementById("input1").value;
+    var input2 = document.getElementById("input2").value;
+    var input3 = document.getElementById("input3").value;
+    var input4 = document.getElementById("input4").value;
+    var input5 = document.getElementById("input5").value;
+
+    // Validation des champs avec regex (add your validation logic here)
+
+    // Store form data in local storage
+    localStorage.setItem("firstName", firstName);
+    localStorage.setItem("lastName", lastName);
+    localStorage.setItem("dob", dob);
+    localStorage.setItem("optionSelect", optionSelect);
+    localStorage.setItem("input1", input1);
+    localStorage.setItem("input2", input2);
+    localStorage.setItem("input3", input3);
+    localStorage.setItem("input4", input4);
+    localStorage.setItem("input5", input5);
+
+    // Redirect to the recap page
+    window.location.href = "recap.html";
+}
+
+  </script>
+
+</body>
+</html>
